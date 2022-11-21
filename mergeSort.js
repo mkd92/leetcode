@@ -1,28 +1,33 @@
-const merge = (arr, l, m, r) => {
-  let p1 = l;
-  let p2 = m + 1;
-  let k = 0;
-  let result = [];
-  while (p1 > m && p2 > r) {
-    if (arr[p1] < arr[p2]) {
-      result[k] = arr[p1];
+function mergeSort(array) {
+  if (array.length === 1) return array;
+  let mid = Math.floor(array.length / 2);
+  let leftArr = array.slice(0, mid);
+  let rightArr = array.slice(mid);
+  return merge(mergeSort(leftArr), mergeSort(rightArr));
+}
+function merge(arr1, arr2) {
+  let p1 = 0;
+  let p2 = 0;
+  let index = 0;
+  let resArr = [];
+  while (p1 < arr1.length && p2 < arr2.length) {
+    if (arr1[p1] < arr2[p2]) {
+      resArr[index] = arr1[p1];
       p1++;
     } else {
-      result[k] = arr[p2];
+      resArr[index] = arr2[p2];
       p2++;
     }
-    k++;
+    index++;
   }
-  for (let i = 0; i < p1; i++) {
-    result[k] = arr[p1];
-    p1++;
-    k++;
+  for (let i = p1; i < arr1.length; i++) {
+    resArr[index] = arr1[j];
+    index++;
   }
-  for (let j = 0; j < p2; j++) {
-    result[k] = arr[p2];
-    p2++;
-    k++;
+  for (let j = p2; j < arr2.length; j++) {
+    resArr[index] = arr2[j];
+    index++;
   }
-  return result;
-};
-console.log(merge([1, 4, 3, 6], 0, 1, 3));
+  return resArr;
+}
+console.log(mergeSort([2, 4, 6, 2, 5, 3, 8]));
